@@ -1,0 +1,33 @@
+name: master
+
+on: [push, pull_request]
+
+jobs:
+  master:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: "3.12"
+            toxenv: py
+          - os: ubuntu-latest
+            python: "3.13"
+            toxenv: py
+          - os: ubuntu-latest
+            python: "3.14"
+            toxenv: py
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: dawnpy-can
+      - uses: actions/checkout@v3
+        with:
+          repository: railab/dawnpy
+          path: dawnpy
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install --upgrade setuptools pip tox virtualenv
+      - run: tox -e ${{ matrix.toxenv }}
+        working-directory: dawnpy-can

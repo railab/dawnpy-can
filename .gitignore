@@ -1,0 +1,17 @@
+*~
+*flycheck*
+*.pyc
+__pycache__
+*egg
+*egg-info
+.tox
+.coverage
+*mypy_cache*
+*pytest_cache*
+venv
+.python-version
+*tox
+*egg-info
+.projectile
+build
+dist
